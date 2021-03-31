@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="bootstrap-4.6.0/css/bootstrap.min.css" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css" />
+  </head>
+  <body>
+    <div class=" container w-25 mt-5">
+      <div class="row">
+        <div class="card ">
+        <div class="card-body">
+            <h4 class="card-title mb-4 mt-1">Register</h4>
+                 <form action="" method="POST" onsubmit="return valid()">
+                <div class="form-group ">
+                    <input name="userName" class="form-control" placeholder="User Name" type="text" size="50" required >
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <input name="email" class="form-control" placeholder="E-mail" type="email" size="50" required>
+                </div> <!-- form-group// --> 
+                <div class="form-group">
+                    <input name="password" class="form-control" placeholder="Password" type="password" size="50" required id="password">
+                </div> <!-- form-group// --> 
+                <div class="form-group">
+                    <input class="form-control" placeholder="Re Password" type="password" size="50" required id="confirm_password">
+                    <span id="message"></span>
+                </div> <!-- form-group// --> 
+                <div class="form-group"> 
+                </div> <!-- form-group// -->  
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block"> Register  </button>
+                </div> <!-- form-group// -->   
+                <div class="form-group">
+                    <a class="" href="#">Click here to Login</a>
+                </div>                                                        
+            </form>
+        </div>
+    </div>
+  </div>
+    <script type="text/javascript">
+     function valid(){
+       const edtPass = document.getElementById("password");
+       const edtCfPass = document.getElementById("confirm_password");
+       const spMessage = document.getElementById("message");
+       if (edtCfPass.value !== edtPass.value){
+         spMessage.innerHTML = "Password And Confirm Password Not Matching";
+         spMessage.style.color = "red";
+         return false;
+       }
+       return true;
+     }
+    </script>
+  </body>
+</html>
