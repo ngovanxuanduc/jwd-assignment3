@@ -38,15 +38,25 @@ public class AuthControler {
 		System.err.println("Password: " + password);
 		System.out.println("----------------------------------");
 		MemberEntity user = memberService.login(userName, password);
-		if (user != null) {
-			session.setAttribute("user", user);
-		} else {
+		if (user == null) {
 			session.removeAttribute("user");
 			model.addAttribute("errors", true);
 			return "redirect:login";
 		}
+		//luu user vao session
+		session.setAttribute("user", user);
+		//get duong dan cu
+		String urlRedirect = (String) session.getAttribute("preUrl");
+		
+//		System.out.println("pre URL: "+urlRedirect);
+		session.removeAttribute("preUrl");
+		
+		if (null == urlRedirect || "".equals(urlRedirect)) {
+			urlRedirect = "../hello";
+		}
 		System.out.println(user);
-		return "hello";
+//		return "redirect:../hello";
+		return "redirect:"+urlRedirect;
 	}
 
 	@GetMapping("/login")
@@ -82,6 +92,6 @@ public class AuthControler {
 		}
 		return "redirect:login";
 	}
-
+		
 }
 //https://mkyong.com/spring/curl-post-request-examples/

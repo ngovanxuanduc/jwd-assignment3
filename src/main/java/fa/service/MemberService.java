@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fa.entity.MemberEntity;
+import fa.payload.request.EditUserReq;
 import fa.repository.DBContext;
 
 @Service
@@ -29,6 +30,17 @@ public class MemberService {
 		return dbContext.memberRepository.save(mem);
 	}
 	
+	
+	public MemberEntity updateMember(EditUserReq memNew, MemberEntity memOld) {
+		
+		//set du lieu moi vao doi tuong cu
+		memOld.setFirstName(memNew.getFirstName());
+		memOld.setLastName(memNew.getLastName());
+		memOld.setPhone(memNew.getPhone());
+		memOld.setDescription(memNew.getDescription());
+		
+		return updateMember(memOld);
+	}
 	
 	public MemberEntity updateMember(MemberEntity member) {
 		return dbContext.memberRepository.save(member);

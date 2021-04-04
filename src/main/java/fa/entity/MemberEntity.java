@@ -1,12 +1,15 @@
 package fa.entity;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,7 +18,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "member")
@@ -57,6 +62,11 @@ public class MemberEntity {
 	@UpdateTimestamp
 	@Column(name = "update_date")
 	private Date updateDate;
+
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+	@ToString.Exclude // Khoonhg sử dụng trong toString()
+	private Collection<ContentEntity> contents;
 }
 
 //https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical
