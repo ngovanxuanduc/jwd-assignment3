@@ -1,10 +1,12 @@
 package fa.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,30 +23,34 @@ public class MemberController {
 	private MemberService memberService;
 
 //	@PostMapping("/add")
-	@GetMapping("/add")
-	public String addMember(HttpSession session ) {
-		MemberEntity entity = memberService.addMember(null);
-		System.out.println(entity);
-		// update ne
-		System.out.println(memberService.updateMember(entity));
-		return "hello";
-	}
+//	@GetMapping("/add")
+//	public String addMember(HttpSession session ) {
+//		MemberEntity entity = memberService.addMember(null);
+//		System.out.println(entity);
+//		// update ne
+//		System.out.println(memberService.updateMember(entity));
+//		return "hello";
+//	}
 	
 	
 	@GetMapping("/edit")
 	public String editMember(HttpSession session, Model model) {
 		MemberEntity user = (MemberEntity) session.getAttribute("user");
-//		System.out.println("CO ten la: "+user.getFirstName());
+		//lay du lieu moi trong DB, lo coi nguoi update trong DB
+		user = memberService.getMemberEntityById(user.getId());
 		model.addAttribute("user", user);
 		return "edit-profile";
 	}
 	
 	@PostMapping("/edit")
-	public String editMember(HttpSession session, @ModelAttribute EditUserReq editUserReq, Model model) {
+	public String editMember(HttpSession session,@Valid @ModelAttribute(name = "editUser") EditUserReq editUserReq, BindingResult br, Model model) {
 		System.out.println(editUserReq);
+		if (br.hasErrors()) {
+			return "edit-profile";
+		}
 		MemberEntity user = (MemberEntity) session.getAttribute("user");
-		model.addAttribute("edit", true);
 		memberService.updateMember(editUserReq, user);
+		model.addAttribute("edit", true);
 		return "edit-profile";
 	}
 }

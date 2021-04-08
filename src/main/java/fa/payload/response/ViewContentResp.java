@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ViewContentResp {
+	private int id;
 	private String title;
 	private String brief;
 	private Date createDate;

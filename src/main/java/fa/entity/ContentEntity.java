@@ -49,7 +49,7 @@ public class ContentEntity {
 	private MemberEntity author;
 	
 	@CreationTimestamp
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable=false)
 	private Date createDate;
 
 	@UpdateTimestamp

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,82 +25,68 @@
 <!-- 	https://mkyong.com/spring-mvc/spring-mvc-how-to-include-js-or-css-files-in-a-jsp-page/    -->
 <!-- https://itphutran.com/lay-duong-dan-thu-muc-goc-trong-jsp/ -->
 </head>
-<header>
-	<div class="container-fluid border-bottom mb-3">
-		<div class="row d-flex justify-content-between">
-			<h3 class="p-3">CMS</h3>
-			<div class="dropdown p-3">
-				<button class="btn btn-light dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-					<i class="fas fa-user"></i>
-				</button>
-				<div class="dropdown-menu dropdown-menu-right"
-					aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>User
-						Profile</a> <a class="dropdown-item" href="#"><i
-						class="fas fa-sign-out-alt mr-2"></i>Logout</a>
-				</div>
-			</div>
-		</div>
-		<div class="row"></div>
-	</div>
-</header>
+
+
+<jsp:include page="header.jsp" />
+
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
-				<form class="form-inline">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search..."
-							aria-describedby="basic-addon1" size="50" />
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="basic-addon1"> <i
-								class="fas fa-search"></i></span>
-						</div>
-					</div>
-				</form>
-				<div class="row mt-3">
-					<div class="col-12">
-						<a class="h5 my-4 d-block text-decoration-none" href="#"> <i
-							class="fas fa-th mr-2"></i>View contents
-						</a> <a class="h5 d-block text-decoration-none" href="#"><i
-							class="fas fa-edit mr-1"></i> Form content</a>
-					</div>
-				</div>
+
+			<jsp:include page="nav.jsp" />
 			</div>
 			<div class="col-9">
 
+
 				<div class="row p-4">
-					<h1>Add Content</h1>
+					<c:choose>
+						<c:when test="${!empty oldContent}">
+							<h1>Update Content</h1>
+						</c:when>
+						<c:otherwise>
+							<h1>Add Content</h1>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="card">
 					<div class="card-header">Content Form Elements</div>
 					<div class="card-body w-75">
-						<form>
+						<form:form action="addcontent" method="POST" modelAttribute="content">
+							<input type="hidden" name="id" class="form-control"value="${oldContent.id}"/>
 							<div class="form-group">
 								<label for="exampleFormControlInput1" class="font-weight-bold">Title</label>
 								<input type="text" name="title" class="form-control"
-									placeholder="Enter the title" />
+									placeholder="Enter the title" value="${oldContent.title}"
+									required />
+									<form:errors path="title" cssClass="text-danger mt-1" />
 							</div>
 
 							<div class="form-group">
 								<label for="exampleFormControlTextarea1"
 									class="font-weight-bold">Brief</label>
-								<textarea class="form-control" name="brief" rows="3"></textarea>
+								<textarea class="form-control" name="brief" rows="3" required>${oldContent.brief}</textarea>
+								<form:errors path="brief" cssClass="text-danger mt-1" />
 							</div>
 							<div class="form-group">
 								<label for="exampleFormControlTextarea1"
 									class="font-weight-bold">Content</label>
-								<textarea class="form-control" name="content" rows="7"></textarea>
+								<textarea class="form-control" name="content" rows="7" required>${oldContent.content}</textarea>
+								<form:errors path="content" cssClass="text-danger mt-1" />
 							</div>
 							<div class="form-group">
-								<button type="button" class="btn btn-outline-secondary">
+								<button type="submit" class="btn btn-outline-secondary">
 									Submit Button</button>
-								<button type="button" class="btn btn-outline-secondary">
-									Reset Button</button>
+								<a type="button" class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/content/addcontent">
+									Reset Button</a>
+								<c:if test="${!empty  oldContent}">
+<%-- 									<a type="button" class="btn btn-outline-secondary" href="<%=request.getContextPath()%>/content/deletecontent"> --%>
+<!-- 										Delete Button</a> -->
+									<button type="submit" class="btn btn-outline-secondary" formaction="deletecontent">
+										Delete Button</button>
+								</c:if>
 							</div>
-						</form>
+						</form:form>
 					</div>
 				</div>
 

@@ -31,13 +31,15 @@ public class AuthFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 //	    HttpSession session = request.getSession(false); // neu ko co session thi ko tao moi
 	    HttpSession session = request.getSession(true); // neu ko co session thi  tao moi
-	    System.out.println(request.getRequestURI());
+//	    System.out.println(request.getRequestURI());
 	    String pathURI = request.getRequestURI().substring(request.getContextPath().length());
-	    System.out.println(request.getContextPath());
-	    System.out.println(pathURI);
+//	    System.out.println(request.getContextPath());
+//	    System.out.println(pathURI);
+	  //luu duong dan cu
+    	session.setAttribute("preUrl",pathURI);
 	    if ( session.getAttribute("user") == null) {
 	    	//luu duong dan cu
-	    	session.setAttribute("preUrl",pathURI);
+//	    	session.setAttribute("preUrl",pathURI);
 	    	//chuyen huong no qua login
 	    	response.sendRedirect(request.getContextPath()+"/auth/login");
 	    } else {

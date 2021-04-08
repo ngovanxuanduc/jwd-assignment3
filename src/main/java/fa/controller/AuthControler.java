@@ -51,6 +51,9 @@ public class AuthControler {
 //		System.out.println("pre URL: "+urlRedirect);
 		session.removeAttribute("preUrl");
 		
+//		demo
+//		session.setAttribute("demo", "demo");
+		
 		if (null == urlRedirect || "".equals(urlRedirect)) {
 			urlRedirect = "../hello";
 		}

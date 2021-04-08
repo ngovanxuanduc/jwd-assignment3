@@ -64,6 +64,10 @@ public class MemberService {
 				.build();
 		return dbContext.memberRepository.save(mem);
 	}
+	
+	public MemberEntity getMemberEntityById(int id) {
+		return dbContext.memberRepository.findOne(id);
+	}
 
 //	public static void main(String[] args) throws InterruptedException {
 //		

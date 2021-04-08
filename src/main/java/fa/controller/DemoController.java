@@ -26,10 +26,10 @@ public class DemoController {
 //	@Autowired
 //	private DBContext dbContext;
 	
-//	@RequestMapping("/")
-//	public String index() {
-//		return "index";
-//	}
+	@RequestMapping("/")
+	public String index() {
+		return "index";
+	}
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String hello(HttpSession session) {
